@@ -46,7 +46,7 @@ out/
 # other stuff
 run/
 
-forktest-server
-forktest-api
+huskypaper-server
+huskypaper-api
 
 !gradle/wrapper/gradle-wrapper.jar

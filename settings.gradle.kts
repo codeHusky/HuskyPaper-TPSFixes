@@ -5,6 +5,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "forktest"
+rootProject.name = "huskypaper"
 
-include("forktest-api", "forktest-server")
+include("huskypaper-api", "huskypaper-server")
