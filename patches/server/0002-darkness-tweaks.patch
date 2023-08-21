@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Loki Rautio <lokirautio@gmail.com>
+Date: Sun, 20 Aug 2023 20:35:39 -0500
+Subject: [PATCH] darkness tweaks
+
+
+diff --git a/src/main/java/net/minecraft/world/level/LevelReader.java b/src/main/java/net/minecraft/world/level/LevelReader.java
+index e3e2b88b8ade4fa2b482626c7e00ac6a0bf8eb5e..aa650967ad997ca967b8fc325e01ab43821c00a5 100644
+--- a/src/main/java/net/minecraft/world/level/LevelReader.java
++++ b/src/main/java/net/minecraft/world/level/LevelReader.java
+@@ -182,7 +182,7 @@ public interface LevelReader extends BlockAndTintGetter, CollisionGetter, Signal
+     }
+ 
+     default int getMaxLocalRawBrightness(BlockPos pos, int ambientDarkness) {
+-        return pos.getX() >= -30000000 && pos.getZ() >= -30000000 && pos.getX() < 30000000 && pos.getZ() < 30000000 ? this.getRawBrightness(pos, ambientDarkness) : 15;
++        return pos.getX() >= -30000000 && pos.getZ() >= -30000000 && pos.getX() < 30000000 && pos.getZ() < 30000000 ? this.getRawBrightness(pos, Math.round(ambientDarkness * (15f/11f))) : 15;
+     }
+ 
+     /** @deprecated */
+diff --git a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
+index de4c1e4701236e7d5ec77339c51ad6a9d8288bb6..8462c13b0a14484ba19b0a0307aa3b1d56b36bf1 100644
+--- a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
++++ b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
+@@ -11,6 +11,7 @@ import java.util.Optional;
+ import java.util.function.Function;
+ import java.util.function.Predicate;
+ import java.util.function.ToIntFunction;
++import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+ import javax.annotation.Nullable;
+ import net.minecraft.core.BlockPos;
+@@ -39,6 +40,7 @@ import net.minecraft.world.flag.FeatureFlags;
+ import net.minecraft.world.item.DyeColor;
+ import net.minecraft.world.item.Item;
+ import net.minecraft.world.item.ItemStack;
++import net.minecraft.world.item.Items;
+ import net.minecraft.world.item.context.BlockPlaceContext;
+ import net.minecraft.world.item.context.UseOnContext;
+ import net.minecraft.world.level.BlockGetter;
+@@ -257,7 +259,12 @@ public abstract class BlockBehaviour implements FeatureElement {
+             ServerLevel worldserver = lootparams.getLevel();
+             LootTable loottable = worldserver.getServer().getLootData().getLootTable(minecraftkey);
+ 
+-            return loottable.getRandomItems(lootparams);
++            return loottable.getRandomItems(lootparams).stream().map(is -> {
++                if(is.is(Items.TORCH) || is.is(Items.REDSTONE_TORCH)){
++                    return Items.STICK.getDefaultInstance();
++                }
++                return is;
++            }).collect(Collectors.toList());
+         }
+     }
+ 
