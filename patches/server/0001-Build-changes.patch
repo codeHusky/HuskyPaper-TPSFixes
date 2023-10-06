@@ -17,7 +17,7 @@ index 57f2c414dbfe127c193002fbc8eeb22e94e9cb55..4b6257b13075bbb3503b0610293c8199
 -    implementation(project(":paper-mojangapi"))
 +    // ForkTest start
 +    implementation(project(":huskypaper-api"))
-+    implementation("io.papermc.paper:paper-mojangapi:1.20.1-R0.1-SNAPSHOT") {
++    implementation("io.papermc.paper:paper-mojangapi:1.20.2-R0.1-SNAPSHOT") {
 +        exclude("io.papermc.paper", "paper-api")
 +    }
 +    // ForkTest end
