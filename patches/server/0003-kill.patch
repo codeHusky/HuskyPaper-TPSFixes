@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Loki Rautio <lokirautio@gmail.com>
+Date: Thu, 5 Oct 2023 16:16:04 -0500
+Subject: [PATCH] kill
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 0070fcee00040615b8f758a38be7bbcc19ff9066..f70bd402f6d8249c445fd99a52feb344f7f24dcb 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -1874,9 +1874,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         }
+         invertedPlugins = new HashSet<>();
+         invertedPlugins.add(CraftPlayer.getPluginWeakReference(plugin));
+-        this.invertedVisibilityEntities.put(entity.getUniqueId(), invertedPlugins);
++        //this.invertedVisibilityEntities.put(entity.getUniqueId(), invertedPlugins);
+ 
+-        return true;
++        return false;
+     }
+ 
+     private void untrackAndHideEntity(org.bukkit.entity.Entity entity) {
