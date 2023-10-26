@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Loki Rautio <lokirautio@gmail.com>
+Date: Thu, 26 Oct 2023 02:25:46 -0500
+Subject: [PATCH] perf tweak again
+
+
+diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
+index 4a2ddb1322f0f1f18482da6be4b9ab0aea1e81c7..d5b7fdf198f8d4e389fa94aa2fe11a10a22ce641 100644
+--- a/src/main/java/net/minecraft/server/level/ChunkMap.java
++++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
+@@ -953,17 +953,18 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+     }
+ 
+     public void move(ServerPlayer player) {
+-        ObjectIterator objectiterator = this.entityMap.values().iterator();
+-
+-        while (objectiterator.hasNext()) {
+-            ChunkMap.TrackedEntity playerchunkmap_entitytracker = (ChunkMap.TrackedEntity) objectiterator.next();
+-
+-            if (playerchunkmap_entitytracker.entity == player) {
+-                playerchunkmap_entitytracker.updatePlayers(this.level.players());
+-            } else {
+-                playerchunkmap_entitytracker.updatePlayer(player);
+-            }
+-        }
++//        ObjectIterator objectiterator = this.entityMap.values().iterator();
++//
++//        while (objectiterator.hasNext()) {
++//            ChunkMap.TrackedEntity playerchunkmap_entitytracker = (ChunkMap.TrackedEntity) objectiterator.next();
++//
++//            if (playerchunkmap_entitytracker.entity == player) {
++//                playerchunkmap_entitytracker.updatePlayers(this.level.players());
++//            } else {
++//                playerchunkmap_entitytracker.updatePlayer(player);
++//            }
++//        }
++        // Paper - delay this logic for the entity tracker tick, no need to duplicate it
+ 
+         SectionPos sectionposition = player.getLastSectionPos();
+         SectionPos sectionposition1 = SectionPos.of((EntityAccess) player);
